@@ -7,9 +7,8 @@ from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.label import Label
 from kivy.uix.widget import Widget
 from kivy.uix.boxlayout import BoxLayout
-from kivy.core.window import Window
+from kivy.config import Config
 from kivy.lang import Builder
-
 
 
 class Graphics(object):
@@ -69,7 +68,7 @@ class TestApp(App):
 def main():
     # test = Graphics()
     # test.build_graph()
-    Window.fullscreen=True
+
     TestApp().run()
 
 if __name__ == "__main__":
