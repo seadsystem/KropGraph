@@ -1,0 +1,40 @@
+<GraphWidget>:
+    BoxLayout:
+        size: root.size
+        pos: root.pos
+        id: boxlayout_h
+        orientation: 'horizontal'
+        ToggleButton:
+            text: 'GraphWidget'
+            group: 'test'
+
+<BatteryWidget>:
+    BoxLayout:
+        orientation: 'vertical'
+        size: root.size
+        pos: root.pos
+        ToggleButton:
+            text: 'BatteryWidget'
+            group: 'test'
+
+<ButtonsWidget>:
+    BoxLayout:
+        orientation: 'vertical'
+        size: root.size
+        pos: root.pos
+        ToggleButton:
+            text: 'ButtonsWidget'
+            group: 'test'
+    
+<ContainerLayout>:
+    orientation: 'horizontal'
+    BoxLayout:
+        orientation: 'vertical'
+        size: root.size
+        size_hint: 0.5, 1
+        pos: root.pos
+        GraphWidget:
+        BatteryWidget
+    ButtonsWidget:
+        size_hint: 0.5, 1
+    
