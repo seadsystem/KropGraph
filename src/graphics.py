@@ -10,6 +10,8 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.config import Config
 from kivy.lang import Builder
 
+from gpio_control import GpioControl
+
 
 class Graphics(object):
 
@@ -50,8 +52,17 @@ class BatteryWidget(Widget):
         super(BatteryWidget, self).__init__(**kwargs)
 
 class ButtonsWidget(Widget):
+
     def __init__(self, **kwargs):
         super(ButtonsWidget, self).__init__(**kwargs)
+
+    def callback(instance, switch, value):
+        print("%s changed state to %s" % (switch, value))
+        if value == 'normal':
+            GpioControl.pin_off(switch)
+        elif value == 'down':
+            GpioControl.pin_on(switch)
+
 
 class ContainerLayout(BoxLayout):
     def __init__(self, **kwargs):

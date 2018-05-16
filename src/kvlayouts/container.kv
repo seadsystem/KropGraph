@@ -23,8 +23,20 @@
         size: root.size
         pos: root.pos
         ToggleButton:
-            text: 'ButtonsWidget'
-            group: 'test'
+            text: 'Switch 1'
+            on_state: root.callback(self.text, args[1])
+            background_down: 'images/maxresdefault.jpg'
+        ToggleButton:
+            text: 'Switch 2'
+            on_state: root.callback(self.text, args[1])
+            background_down: 'images/maxresdefault.jpg'
+        ToggleButton:
+            text: 'Switch 3'
+            on_state: root.callback(self.text, args[1])
+            background_down: 'images/maxresdefault.jpg'
+        ToggleButton:
+            text: 'Switch 4'
+            on_state: root.callback(self.text, args[1])
             background_down: 'images/maxresdefault.jpg'
     
 <ContainerLayout>:
