@@ -16,7 +16,7 @@ class SeadsCore(object):
 
         :param self:
         """
-        self.appliances = [SeadsAppliance() for i in range(6)]
+        self.appliances = [SeadsAppliance()]
         pass
 
     def get_appliances(self):

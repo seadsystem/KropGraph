@@ -9,6 +9,10 @@ from kivy.uix.widget import Widget
 from kivy.uix.boxlayout import BoxLayout
 from kivy.config import Config
 from kivy.lang import Builder
+from kivy.clock import Clock
+from seads_core import SeadsCore
+from backend_kivyagg import FigureCanvasKivyAgg
+import matplotlib.pyplot as plt
 
 
 class Graphics(object):
@@ -22,7 +26,7 @@ class Graphics(object):
         """
         # print("test")
         # return Label(text='Hello World')
-        return GraphWidget()
+        # return GraphWidget()
 
     def build_buttons(self):
         """
@@ -36,7 +40,7 @@ class Graphics(object):
     def build_layout(self):
         """
         returns a layout containing all the other elements
-        this should be called 
+        this should be called
         """
         return ContainerLayout()
 
@@ -58,10 +62,32 @@ class ContainerLayout(BoxLayout):
         super(ContainerLayout, self).__init__(**kwargs)
 
 class TestApp(App):
+    def my_callback(self, dt):
+        for appliance in self.core.get_appliances():
+            self.plot_data(appliance.get_data())
+
+
+    def plot_data(self, data):
+        if data == []:
+            return
+        values = data[0][0]
+        values.reverse()
+        self.box.clear_widgets()
+        plt.cla()
+        plt.plot(values, color='blue')
+        plt.ylabel('kWh')
+        self.box.add_widget(FigureCanvasKivyAgg(plt.gcf()))
+
+
     def build(self):
+        self.core = SeadsCore()
         Builder.load_file('./kvlayouts/container.kv')
         graphics = Graphics()
         containerlayout = graphics.build_layout()
+        Clock.schedule_interval(self.my_callback, 45)
+        graph_widget = containerlayout.ids['graph_widget']
+        self.box = graph_widget.ids['boxlayout_h']
+        Clock.schedule_once(self.my_callback, 5)
         return containerlayout
 
 

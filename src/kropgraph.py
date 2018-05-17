@@ -11,7 +11,6 @@ from timestamp_utils import TimestampUtils
 
 
 def main():
-
     core = SeadsCore()
     for appliance in core.get_appliances():
         appliance.set_label("Panel {}".format(randint(0, 10)))
