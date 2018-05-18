@@ -55,13 +55,14 @@ class ButtonsWidget(Widget):
 
     def __init__(self, **kwargs):
         super(ButtonsWidget, self).__init__(**kwargs)
+        self.gpiocontrol = GpioControl()
 
-    def callback(instance, switch, value):
+    def callback(self, switch, value):
         print("%s changed state to %s" % (switch, value))
         if value == 'normal':
-            GpioControl.pin_off(switch)
+            self.gpiocontrol.pin_off(switch)
         elif value == 'down':
-            GpioControl.pin_on(switch)
+            self.gpiocontrol.pin_on(switch)
 
 
 class ContainerLayout(BoxLayout):

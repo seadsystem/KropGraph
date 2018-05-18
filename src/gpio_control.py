@@ -25,7 +25,7 @@ class GpioControl(object):
              GPIO.setup(value, GPIO.OUT)
 
 
-    def pin_on(switch):
+    def pin_on(self, switch):
         """
 
         :param pin:
@@ -34,7 +34,7 @@ class GpioControl(object):
         print('Turning pin %d on' % GpioControl.switches[switch])
         GPIO.output(GPIO.switches[switch], 1)
 
-    def pin_off(switch):
+    def pin_off(self, switch):
         """
 
         :param pin:
