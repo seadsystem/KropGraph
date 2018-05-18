@@ -58,6 +58,11 @@ class ButtonsWidget(Widget):
         self.gpiocontrol = GpioControl()
 
     def callback(self, switch, value):
+        """
+        Callback function for buttons
+        :param switch: Text of the switch that was toggled
+        :param value: State of the button
+        """
         print("%s changed state to %s" % (switch, value))
         if value == 'normal':
             self.gpiocontrol.pin_off(switch)

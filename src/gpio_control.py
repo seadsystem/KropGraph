@@ -17,28 +17,23 @@ class GpioControl(object):
     }
 
     def __init__(self):
-        """
-
-        """
         GPIO.setmode(GPIO.BOARD)
-        for key, value in d.items():
-             GPIO.setup(value, GPIO.OUT)
-
+        for key, value in GpioControl.switches.items():
+            GPIO.setup(value, GPIO.OUT)
+            GPIO.output(value, 0)
 
     def pin_on(self, switch):
         """
-
-        :param pin:
-        :return:
+        Turns on the pin corresponding to switch
+        :param switch: Switch that was toggled to down
         """
         print('Turning pin %d on' % GpioControl.switches[switch])
-        GPIO.output(GPIO.switches[switch], 1)
+        GPIO.output(GpioControl.switches[switch], 1)
 
     def pin_off(self, switch):
         """
-
-        :param pin:
-        :return:
+        Turns off the pin corresponding to switch
+        :param switch: Switch that was toggled to normal
         """
         print('Turning pin %d off' % GpioControl.switches[switch])
-        GPIO.output(GPIO.switches[switch], 0)
+        GPIO.output(GpioControl.switches[switch], 0)
