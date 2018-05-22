@@ -4,8 +4,6 @@
         pos: root.pos
         id: boxlayout_h
         orientation: 'horizontal'
-        ToggleButton:
-            text: 'GraphWidget'
 
 <BatteryWidget>:
     BoxLayout:
@@ -14,6 +12,7 @@
         pos: root.pos
         ToggleButton:
             text: 'BatteryWidget'
+            group: 'test'
 
 <ButtonsWidget>:
     BoxLayout:
@@ -22,6 +21,8 @@
         pos: root.pos
         ToggleButton:
             text: 'ButtonsWidget'
+            group: 'test'
+            background_down: 'images/maxresdefault.jpg'
 
 <ContainerLayout>:
     orientation: 'horizontal'
@@ -31,7 +32,7 @@
         size_hint: 0.5, 1
         pos: root.pos
         GraphWidget:
+            id: graph_widget
         BatteryWidget
     ButtonsWidget:
         size_hint: 0.5, 1
-    
