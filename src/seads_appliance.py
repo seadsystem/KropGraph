@@ -4,6 +4,7 @@ __version__ = "0.1"
 
 from data_streamer import DataStreamer
 from queue import Queue
+from timestamp_utils import TimestampUtils
 
 
 class SeadsAppliance(object):
@@ -52,3 +53,6 @@ class SeadsAppliance(object):
         :return:
         """
         return self.label
+
+    def __repr__(self):
+        return "{}={}".format(self.get_label(), self.get_data())

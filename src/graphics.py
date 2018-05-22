@@ -7,7 +7,6 @@ from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.label import Label
 from kivy.uix.widget import Widget
 from kivy.uix.boxlayout import BoxLayout
-from kivy.config import Config
 from kivy.lang import Builder
 
 
@@ -53,9 +52,17 @@ class ButtonsWidget(Widget):
     def __init__(self, **kwargs):
         super(ButtonsWidget, self).__init__(**kwargs)
 
+    def on_touch_down(self, touch):
+        super(ButtonsWidget, self).on_touch_down(touch)
+
+    def on_touch_up(self, touch):
+        super(ButtonsWidget, self).on_touch_up(touch)
+
+
 class ContainerLayout(BoxLayout):
     def __init__(self, **kwargs):
         super(ContainerLayout, self).__init__(**kwargs)
+
 
 class TestApp(App):
     def build(self):

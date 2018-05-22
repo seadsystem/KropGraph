@@ -8,18 +8,22 @@ from seads_core import SeadsCore
 from time import sleep
 from random import randint
 from timestamp_utils import TimestampUtils
+from queue import Queue
+
+
+queue_seads_data = Queue()
+queue_ups_data = Queue()
+
+# Labels for the Pins in order
+pin_labels = ["Light Bulb", "Huge Bulb", "Lamp", "Fridge"]
 
 
 def main():
 
-    core = SeadsCore()
-    for appliance in core.get_appliances():
-        appliance.set_label("Panel {}".format(randint(0, 10)))
+    core = SeadsCore(pin_labels)
     sleep(1)
     for appliance in core.get_appliances():
-        print("{}={}".format(appliance.get_label(), appliance.get_data()))
-
-    TimestampUtils.convert_to_readable("test")
+        print(appliance)
 
 
 if __name__ == "__main__":
