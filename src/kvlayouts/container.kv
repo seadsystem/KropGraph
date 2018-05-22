@@ -1,0 +1,53 @@
+<GraphWidget>:
+    BoxLayout:
+        size: root.size
+        pos: root.pos
+        id: boxlayout_h
+        orientation: 'horizontal'
+        ToggleButton:
+            text: 'GraphWidget'
+            group: 'test'
+
+<BatteryWidget>:
+    BoxLayout:
+        orientation: 'vertical'
+        size: root.size
+        pos: root.pos
+        ToggleButton:
+            text: 'BatteryWidget'
+            group: 'test'
+
+<ButtonsWidget>:
+    BoxLayout:
+        orientation: 'vertical'
+        size: root.size
+        pos: root.pos
+        ToggleButton:
+            text: 'Switch 1'
+            on_state: root.callback(self.text, args[1])
+            background_down: 'images/maxresdefault.jpg'
+        ToggleButton:
+            text: 'Switch 2'
+            on_state: root.callback(self.text, args[1])
+            background_down: 'images/maxresdefault.jpg'
+        ToggleButton:
+            text: 'Switch 3'
+            on_state: root.callback(self.text, args[1])
+            background_down: 'images/maxresdefault.jpg'
+        ToggleButton:
+            text: 'Switch 4'
+            on_state: root.callback(self.text, args[1])
+            background_down: 'images/maxresdefault.jpg'
+    
+<ContainerLayout>:
+    orientation: 'horizontal'
+    BoxLayout:
+        orientation: 'vertical'
+        size: root.size
+        size_hint: 0.5, 1
+        pos: root.pos
+        GraphWidget:
+        BatteryWidget
+    ButtonsWidget:
+        size_hint: 0.5, 1
+    
