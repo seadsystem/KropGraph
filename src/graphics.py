@@ -74,6 +74,7 @@ class TestApp(App):
     def battery_callback(self,percent,temp):
         self.box2.clear_widgets()
         plt.cla()
+        plt.close()
         battery.draw_battery(self.box2,percent)
     def plot_data(self, data):
         if data == []:
@@ -82,6 +83,7 @@ class TestApp(App):
         values.reverse()
         self.box.clear_widgets()
         plt.cla()
+        plt.close()
         plt.plot(values, color='blue')
         plt.ylabel('kWh')
         self.box.add_widget(FigureCanvasKivyAgg(plt.gcf()))
@@ -101,7 +103,7 @@ class TestApp(App):
         self.box2 = battery_widget.ids['boxlayout_h']
         self.battery_callback(battery_temp,5)
         Clock.schedule_once(self.my_callback, 5)
-        Clock.schedule_interval(partial(self.battery_callback,battery_temp2), 5)
+        Clock.schedule_interval(partial(self.battery_callback,battery_temp2), 20)
         return containerlayout
 
 
