@@ -14,6 +14,10 @@ from seads_core import SeadsCore
 from backend_kivyagg import FigureCanvasKivyAgg
 import matplotlib.pyplot as plt
 
+import matplotlib.patches as patches
+from matplotlib.path import Path
+import battery
+from functools import partial
 
 class Graphics(object):
 
@@ -67,6 +71,10 @@ class TestApp(App):
             self.plot_data(appliance.get_data())
 
 
+    def battery_callback(self,percent,temp):
+        self.box2.clear_widgets()
+        plt.cla()
+        battery.draw_battery(self.box2,percent)
     def plot_data(self, data):
         if data == []:
             return
@@ -80,14 +88,20 @@ class TestApp(App):
 
 
     def build(self):
+        battery_temp = 1    ##temporary for demonstration purposes
+        battery_temp2 = .5  ##temporary for demonstration purposes
         self.core = SeadsCore()
         Builder.load_file('./kvlayouts/container.kv')
         graphics = Graphics()
         containerlayout = graphics.build_layout()
         Clock.schedule_interval(self.my_callback, 45)
         graph_widget = containerlayout.ids['graph_widget']
+        battery_widget = containerlayout.ids['battery_widget']
         self.box = graph_widget.ids['boxlayout_h']
+        self.box2 = battery_widget.ids['boxlayout_h']
+        self.battery_callback(battery_temp,5)
         Clock.schedule_once(self.my_callback, 5)
+        Clock.schedule_interval(partial(self.battery_callback,battery_temp2), 5)
         return containerlayout
 
 
