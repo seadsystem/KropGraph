@@ -10,9 +10,7 @@
         orientation: 'vertical'
         size: root.size
         pos: root.pos
-        ToggleButton:
-            text: 'BatteryWidget'
-            group: 'test'
+        id: boxlayout_h
 
 <ButtonsWidget>:
     BoxLayout:
@@ -33,6 +31,7 @@
         pos: root.pos
         GraphWidget:
             id: graph_widget
-        BatteryWidget
+        BatteryWidget:
+            id: battery_widget
     ButtonsWidget:
         size_hint: 0.5, 1
