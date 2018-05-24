@@ -13,10 +13,9 @@ from kivy.uix.widget import Widget
 
 import battery
 from backend_kivyagg import FigureCanvasKivyAgg
+from gpio_control import GpioControl
 from seads_core import SeadsCore
 from ups_streamer import UpsStreamer
-
-from gpio_control import GpioControl
 
 
 class Graphics(App):
@@ -30,9 +29,10 @@ class Graphics(App):
             self.plot_data(data)
         """
 
-    def battery_callback(self, ups_q):
-        if not ups_q.empty():
-            percent = ups_q.get()
+    def battery_callback(self, dt):
+        if not self.ups_queue.empty():
+            percent = self.ups_queue.get()
+            plt.figure(2)
             self.box2.clear_widgets()
             plt.clf()
             battery.draw_battery(self.box2, percent)
@@ -45,10 +45,11 @@ class Graphics(App):
                 test = self.data_points.popleft()
                 pass
             self.data_points.append(data)
+        plt.figure(1)
         self.box.clear_widgets()
         plt.clf()
         values, timestamps = zip(*self.data_points)
-        plt.plot(timestamps, values, color='blue')
+        plt.plot(timestamps, values, color='green')
         ax = plt.gca()
         max_yticks = 5
         yloc = plt.MaxNLocator(max_yticks)
@@ -56,6 +57,7 @@ class Graphics(App):
         import matplotlib.dates as mdates
         ax.xaxis.set_major_formatter(mdates.DateFormatter('%H:%M:%S'))
         plt.ylabel('kWh')
+
         self.box.add_widget(FigureCanvasKivyAgg(plt.gcf()))
 
     def build(self):
@@ -69,10 +71,13 @@ class Graphics(App):
         graph_widget = containerlayout.ids['graph_widget']
         battery_widget = containerlayout.ids['battery_widget']
         self.box = graph_widget.ids['boxlayout_h']
+        plt.style.use("dark_background")
         self.box2 = battery_widget.ids['boxlayout_h']
-        ups_queue = Queue()
-        self.ups = UpsStreamer(ups_queue)
-        self.battery_callback(ups_queue)
+        Clock.schedule_interval(self.battery_callback, 5)
+
+        self.ups_queue = Queue()
+        self.ups = UpsStreamer(self.ups_queue)
+        self.battery_callback(0)
 
         # Clock.schedule_once(self.my_callback, 5)
         # Clock.schedule_once(self.my_callback, 5)

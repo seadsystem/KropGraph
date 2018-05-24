@@ -23,9 +23,9 @@ class UpsStreamer(object):
 
     def _start_data_poll(self):
         """
-
         :return:
         """
+        # TODO: inject apcupsd syscall
         while True:
             self.message_queue.put(randint(0, 100))
 

@@ -6,11 +6,12 @@ from backend_kivyagg import FigureCanvasKivyAgg
 
 
 def draw_battery(box, power_level):
-    fig = plt.figure()
+    fig = plt.figure(2)
     ax = fig.add_axes([0, 0, 1, 1])
     ax.set_axis_off()
+    print("POWER:{}".format(power_level))
 
-    left, width = .258, (.1 * power_level)
+    left, width = .258, (.00485 * power_level)
     bottom, height = .345, .31
     right = left + width
     top = bottom + height

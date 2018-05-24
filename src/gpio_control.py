@@ -1,7 +1,6 @@
 __author__ = "Grant Lin"
 __email__ = "grant523@gmail.com"
 
-import RPi.GPIO as GPIO
 
 
 class GpioControl(object):
@@ -17,6 +16,12 @@ class GpioControl(object):
     }
 
     def __init__(self):
+        try:
+            import RPi.GPIO as GPIO
+        except ModuleNotFoundError:
+            self.simulate = True
+            return
+
         GPIO.setmode(GPIO.BOARD)
         for key, value in GpioControl.switches.items():
             GPIO.setup(value, GPIO.OUT)
@@ -28,6 +33,8 @@ class GpioControl(object):
         :param switch: Switch that was toggled to down
         """
         print('Turning pin %d on' % GpioControl.switches[switch])
+        if self.simulate:
+            return
         GPIO.output(GpioControl.switches[switch], 1)
 
     def pin_off(self, switch):
@@ -36,4 +43,6 @@ class GpioControl(object):
         :param switch: Switch that was toggled to normal
         """
         print('Turning pin %d off' % GpioControl.switches[switch])
+        if self.simulate:
+            return
         GPIO.output(GpioControl.switches[switch], 0)
