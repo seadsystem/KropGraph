@@ -13,6 +13,12 @@ from seads_core import SeadsCore
 from backend_kivyagg import FigureCanvasKivyAgg
 import matplotlib.pyplot as plt
 
+import matplotlib.patches as patches
+from collections import deque
+from matplotlib.path import Path
+import battery
+import numpy as np
+from functools import partial
 
 class Graphics(object):
 
@@ -69,32 +75,54 @@ class ContainerLayout(BoxLayout):
 
 
 class TestApp(App):
+    data_points = deque([])
     def my_callback(self, dt):
         for appliance in self.core.get_appliances():
-            self.plot_data(appliance.get_data())
+            data = appliance.get_data()
+            self.plot_data(data)
 
+
+    def battery_callback(self,percent,temp):
+        self.box2.clear_widgets()
+        plt.cla()
+        battery.draw_battery(self.box2,percent)
 
     def plot_data(self, data):
-        if data == []:
+        if data == -1:
             return
-        values = data[0][0]
-        values.reverse()
+        else:
+            if (len(self.data_points) == 60):
+                self.data_points.popleft()
+            self.data_points.append(data)
         self.box.clear_widgets()
-        plt.cla()
-        plt.plot(values, color='blue')
+        plt.clf()
+        values, timestamps = zip(*self.data_points)
+        plt.plot(timestamps, values, color='blue')
+        ax = plt.gca()
+        max_yticks = 5
+        yloc = plt.MaxNLocator(max_yticks)
+        ax.xaxis.set_major_locator(yloc)
+        import matplotlib.dates as mdates
+        ax.xaxis.set_major_formatter(mdates.DateFormatter('%H:%M:%S'))
         plt.ylabel('kWh')
         self.box.add_widget(FigureCanvasKivyAgg(plt.gcf()))
 
 
     def build(self):
+        battery_temp = 1    ##temporary for demonstration purposes
+        battery_temp2 = .5  ##temporary for demonstration purposes
         self.core = SeadsCore()
         Builder.load_file('./kvlayouts/container.kv')
         graphics = Graphics()
         containerlayout = graphics.build_layout()
-        Clock.schedule_interval(self.my_callback, 45)
+        Clock.schedule_interval(self.my_callback, 1)
         graph_widget = containerlayout.ids['graph_widget']
+        battery_widget = containerlayout.ids['battery_widget']
         self.box = graph_widget.ids['boxlayout_h']
-        Clock.schedule_once(self.my_callback, 5)
+        self.box2 = battery_widget.ids['boxlayout_h']
+        self.battery_callback(battery_temp,5)
+        # Clock.schedule_once(self.my_callback, 5)
+        # Clock.schedule_interval(partial(self.battery_callback,battery_temp2), 5)
         return containerlayout
 
 
