@@ -71,6 +71,8 @@ class Graphics(App):
         ups_queue = Queue()
         self.ups = UpsStreamer(ups_queue)
         self.battery_callback(ups_queue)
+
+        # Clock.schedule_once(self.my_callback, 5)
         # Clock.schedule_once(self.my_callback, 5)
         # Clock.schedule_interval(partial(self.battery_callback,battery_temp2), 5)
         return containerlayout
