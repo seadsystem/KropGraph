@@ -2,14 +2,18 @@ __author__ = "Your name"
 __email__ = "Your email"
 __version__ = "0.1"
 
-from data_streamer import DataStreamer
+from collections import deque
 from queue import Queue
+
+from data_streamer import DataStreamer
 
 
 class SeadsAppliance(object):
     """
     Docstring here
     """
+
+    current_data = deque([])
 
     def __init__(self, label=""):
         """
@@ -18,7 +22,8 @@ class SeadsAppliance(object):
         """
         self.label = label
         self.recv_msg_queue = Queue()
-        self.power_data = DataStreamer(self.recv_msg_queue)
+        if label == "master":
+            self.power_data = DataStreamer(self.recv_msg_queue)
         pass
 
     def _parse_data(self):
@@ -26,17 +31,20 @@ class SeadsAppliance(object):
 
         :return:
         """
-        data = []
         while not self.recv_msg_queue.empty():
-            data.append(self.recv_msg_queue.get())
-        return data
+            self.current_data.appendleft(self.recv_msg_queue.get())
 
     def get_data(self):
         """
 
         :return:
         """
-        return self._parse_data()
+        self._parse_data()
+        if (len(self.current_data) != 0):
+            data = self.current_data.popleft()
+            return data
+        else:
+            return -1
 
     def set_label(self, label):
         """
@@ -52,3 +60,6 @@ class SeadsAppliance(object):
         :return:
         """
         return self.label
+
+    def __repr__(self):
+        return "{}={}".format(self.get_label(), self.get_data())

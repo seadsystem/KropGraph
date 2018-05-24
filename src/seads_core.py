@@ -11,12 +11,12 @@ class SeadsCore(object):
     Docstring here
     """
 
-    def __init__(self):
+    def __init__(self, appliance_names):
         """
 
         :param self:
         """
-        self.appliances = [SeadsAppliance() for i in range(6)]
+        self.appliances = [SeadsAppliance(appliance_names[i]) for i in range(4)]
         pass
 
     def get_appliances(self):
@@ -25,3 +25,7 @@ class SeadsCore(object):
         :return:
         """
         return self.appliances
+
+    def get_power(self):
+        return self.appliances[0].get_data()
+        pass

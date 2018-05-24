@@ -4,18 +4,13 @@
         pos: root.pos
         id: boxlayout_h
         orientation: 'horizontal'
-        ToggleButton:
-            text: 'GraphWidget'
-            group: 'test'
 
 <BatteryWidget>:
     BoxLayout:
         orientation: 'vertical'
         size: root.size
         pos: root.pos
-        ToggleButton:
-            text: 'BatteryWidget'
-            group: 'test'
+        id: boxlayout_h
 
 <ButtonsWidget>:
     BoxLayout:
@@ -38,7 +33,7 @@
             text: 'Switch 4'
             on_state: root.callback(self.text, args[1])
             background_down: 'images/maxresdefault.jpg'
-    
+
 <ContainerLayout>:
     orientation: 'horizontal'
     BoxLayout:
@@ -47,7 +42,8 @@
         size_hint: 0.5, 1
         pos: root.pos
         GraphWidget:
-        BatteryWidget
+            id: graph_widget
+        BatteryWidget:
+            id: battery_widget
     ButtonsWidget:
         size_hint: 0.5, 1
-    

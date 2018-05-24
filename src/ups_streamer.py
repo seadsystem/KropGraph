@@ -2,6 +2,7 @@ __author__ = "Your name"
 __email__ = "Your email"
 __version__ = "0.1"
 
+from random import randint
 from threading import Thread
 
 
@@ -25,6 +26,8 @@ class UpsStreamer(object):
 
         :return:
         """
+        while True:
+            self.message_queue.put(randint(0, 100))
 
     def finish(self):
         self.running = False
