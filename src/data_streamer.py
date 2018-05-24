@@ -2,12 +2,12 @@ __author__ = "Your name"
 __email__ = "Your email"
 __version__ = "0.1"
 
-from threading import Thread
-from random import randint
-from time import time, sleep
-from datetime import datetime
-import requests
 import json
+from datetime import datetime
+from threading import Thread
+from time import sleep
+
+import requests
 
 
 class DataStreamer(object):
@@ -31,7 +31,6 @@ class DataStreamer(object):
         """
         url = "http://db.sead.systems:8080/466419818?limit=61&device=Panel3&type=P"
         while True:
-            print("Polling!")
             response = requests.get(url)
             json_data = json.loads(response.text)
             for i in range(2,61):

@@ -25,3 +25,7 @@ class SeadsCore(object):
         :return:
         """
         return self.appliances
+
+    def get_power(self):
+        return self.appliances[0].get_data()
+        pass

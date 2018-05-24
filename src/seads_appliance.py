@@ -2,10 +2,10 @@ __author__ = "Your name"
 __email__ = "Your email"
 __version__ = "0.1"
 
-from data_streamer import DataStreamer
-from queue import Queue
 from collections import deque
-from timestamp_utils import TimestampUtils
+from queue import Queue
+
+from data_streamer import DataStreamer
 
 
 class SeadsAppliance(object):
@@ -22,7 +22,8 @@ class SeadsAppliance(object):
         """
         self.label = label
         self.recv_msg_queue = Queue()
-        self.power_data = DataStreamer(self.recv_msg_queue)
+        if label == "master":
+            self.power_data = DataStreamer(self.recv_msg_queue)
         pass
 
     def _parse_data(self):
