@@ -19,6 +19,5 @@ def main():
     graphics.run()
 
 
-
 if __name__ == "__main__":
     main()

@@ -56,7 +56,18 @@ class Graphics(App):
         ax.xaxis.set_major_locator(yloc)
         import matplotlib.dates as mdates
         ax.xaxis.set_major_formatter(mdates.DateFormatter('%H:%M:%S'))
-        plt.ylabel('kWh')
+        plt.ylabel('Wh')
+        plt.xlabel('Time')
+        SMALL_SIZE = 8
+        MEDIUM_SIZE = 12
+        BIGGER_SIZE = 16
+        plt.rc('font', size=BIGGER_SIZE)  # controls default text sizes
+        plt.rc('axes', titlesize=BIGGER_SIZE)  # fontsize of the axes title
+        plt.rc('axes', labelsize=BIGGER_SIZE)  # fontsize of the x and y labels
+        plt.rc('xtick', labelsize=BIGGER_SIZE)  # fontsize of the tick labels
+        plt.rc('ytick', labelsize=BIGGER_SIZE)  # fontsize of the tick labels
+        plt.rc('legend', fontsize=BIGGER_SIZE)  # legend fontsize
+        plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
 
         self.box.add_widget(FigureCanvasKivyAgg(plt.gcf()))
 
@@ -73,7 +84,7 @@ class Graphics(App):
         self.box = graph_widget.ids['boxlayout_h']
         plt.style.use("dark_background")
         self.box2 = battery_widget.ids['boxlayout_h']
-        Clock.schedule_interval(self.battery_callback, 5)
+        Clock.schedule_interval(self.battery_callback, 0.25)
 
         self.ups_queue = Queue()
         self.ups = UpsStreamer(self.ups_queue)
@@ -198,7 +209,7 @@ class TestApp(App):
         battery_widget = containerlayout.ids['battery_widget']
         self.box = graph_widget.ids['boxlayout_h']
         self.box2 = battery_widget.ids['boxlayout_h1']
-        self.battery_callback(battery_temp,5)
+        self.battery_callback(battery_temp, 1)
         # Clock.schedule_once(self.my_callback, 5)
         # Clock.schedule_interval(partial(self.battery_callback,battery_temp2), 5)
         return containerlayout

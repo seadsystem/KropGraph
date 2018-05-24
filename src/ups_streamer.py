@@ -2,7 +2,6 @@ __author__ = "Your name"
 __email__ = "Your email"
 __version__ = "0.1"
 
-from random import randint
 from threading import Thread
 
 
@@ -27,7 +26,18 @@ class UpsStreamer(object):
         """
         # TODO: inject apcupsd syscall
         while True:
-            self.message_queue.put(randint(0, 100))
+            pct_full = 50
+            frac = (100 - pct_full) / 4.0
+            frac_1 = pct_full + frac * 1
+            frac_2 = pct_full + frac * 2
+            frac_3 = pct_full + frac * 3
+            frac_4 = pct_full + frac * 4
+
+            self.message_queue.put(pct_full)
+            self.message_queue.put(frac_1)
+            self.message_queue.put(frac_2)
+            self.message_queue.put(frac_3)
+            self.message_queue.put(frac_4)
 
     def finish(self):
         self.running = False

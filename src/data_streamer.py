@@ -36,7 +36,7 @@ class DataStreamer(object):
             for i in range(2,61):
                 previous_data_point = json_data[i-1]
                 current_data_point = json_data[i]
-                delta = (float(current_data_point[1]) - float(previous_data_point[1])) / (3600.0*1000.0);
+                delta = (float(current_data_point[1]) - float(previous_data_point[1])) / (3600.0 * 1.0);
                 datetime_object = datetime.strptime(current_data_point[0], '%Y-%m-%d %H:%M:%S')
                 self.message_queue.put((delta, datetime_object))
             sleep(60)

@@ -9,7 +9,6 @@ def draw_battery(box, power_level):
     fig = plt.figure(2)
     ax = fig.add_axes([0, 0, 1, 1])
     ax.set_axis_off()
-    print("POWER:{}".format(power_level))
 
     left, width = .258, (.00485 * power_level)
     bottom, height = .345, .31
