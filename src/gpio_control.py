@@ -1,6 +1,7 @@
 __author__ = "Grant Lin"
 __email__ = "grant523@gmail.com"
 
+import RPi.GPIO as GPIO
 
 
 class GpioControl(object):
@@ -9,15 +10,16 @@ class GpioControl(object):
     """
 
     switches = {
-        'Switch 1': 3,
-        'Switch 2': 5,
-        'Switch 3': 7,
-        'Switch 4': 29
+        'Switch 1': 31,
+        'Switch 2': 33,
+        'Switch 3': 35,
+        'Switch 4': 37
     }
 
     def __init__(self):
         try:
             import RPi.GPIO as GPIO
+            self.simulate = False
         except ModuleNotFoundError:
             self.simulate = True
             return

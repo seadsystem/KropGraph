@@ -3,6 +3,8 @@ __email__ = "Your email"
 __version__ = "0.1"
 
 from threading import Thread
+import subprocess
+from time import sleep
 
 
 class UpsStreamer(object):
@@ -26,7 +28,8 @@ class UpsStreamer(object):
         """
         # TODO: inject apcupsd syscall
         while True:
-            pct_full = 50
+            pct_full = float(subprocess.check_output(["apcaccess"]).decode().split("\n")[13].split(":")[1].strip().split(" ")[0])
+            #pct_full = 0
             frac = (100 - pct_full) / 4.0
             frac_1 = pct_full + frac * 1
             frac_2 = pct_full + frac * 2

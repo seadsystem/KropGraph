@@ -3,7 +3,8 @@ __email__ = "Your email"
 
 from collections import deque
 from queue import Queue
-
+import matplotlib
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from kivy.app import App
 from kivy.clock import Clock
@@ -58,16 +59,6 @@ class Graphics(App):
         ax.xaxis.set_major_formatter(mdates.DateFormatter('%H:%M:%S'))
         plt.ylabel('Wh')
         plt.xlabel('Time')
-        SMALL_SIZE = 8
-        MEDIUM_SIZE = 12
-        BIGGER_SIZE = 16
-        plt.rc('font', size=BIGGER_SIZE)  # controls default text sizes
-        plt.rc('axes', titlesize=BIGGER_SIZE)  # fontsize of the axes title
-        plt.rc('axes', labelsize=BIGGER_SIZE)  # fontsize of the x and y labels
-        plt.rc('xtick', labelsize=BIGGER_SIZE)  # fontsize of the tick labels
-        plt.rc('ytick', labelsize=BIGGER_SIZE)  # fontsize of the tick labels
-        plt.rc('legend', fontsize=BIGGER_SIZE)  # legend fontsize
-        plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
 
         self.box.add_widget(FigureCanvasKivyAgg(plt.gcf()))
 
